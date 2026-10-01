@@ -83,6 +83,7 @@ a {
   justify-content: space-between;
   gap: 1rem;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .nav-brand {
@@ -102,6 +103,42 @@ a {
   height: 40px;
   border: none;
   background: transparent;
+}
+
+.nav-toggle {
+  display: none;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  border: var(--border);
+  background: var(--amber);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 3px;
+  background: var(--ink);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav.is-open .nav-toggle-bar:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.nav.is-open .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav.is-open .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
 }
 
 .nav-links {
@@ -657,18 +694,19 @@ main {
   .feature-list li:hover {
     box-shadow: 4px 4px 0 var(--orange);
   }
-}
 
-@media (max-width: 560px) {
+  body {
+    background-attachment: scroll;
+  }
+
   .nav {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
+    flex-wrap: nowrap;
     padding: 0.75rem 1rem;
   }
 
   .nav-brand {
     font-size: 0.95rem;
+    min-width: 0;
   }
 
   .nav-brand img {
@@ -676,23 +714,45 @@ main {
     height: 36px;
   }
 
+  .nav-toggle {
+    display: inline-flex;
+  }
+
   .nav-links {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.4rem;
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 1rem;
+    right: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--paper);
+    border: var(--border);
+    box-shadow: var(--shadow);
+    z-index: 120;
+  }
+
+  .nav.is-open .nav-links {
+    display: flex;
   }
 
   .nav-links a {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    padding: 0.55rem 0.5rem;
+    min-height: 48px;
+    padding: 0.7rem 0.75rem;
     border: 3px solid var(--ink);
     background: #fff;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .nav-brand {
+    font-size: 0.9rem;
   }
 
   .hero {
@@ -790,13 +850,8 @@ main {
 }
 
 @media (max-width: 380px) {
-  .nav-links {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .nav-brand span,
   .nav-brand {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
   }
 
   .hero-brand span {
@@ -812,11 +867,5 @@ main {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-}
-
-@media (max-width: 760px) {
-  body {
-    background-attachment: scroll;
   }
 }
