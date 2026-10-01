@@ -96,6 +96,7 @@ a {
   font-size: 1.05rem;
   letter-spacing: -0.02em;
   text-transform: uppercase;
+  min-width: 0;
 }
 
 .nav-brand img {
@@ -103,13 +104,15 @@ a {
   height: 40px;
   border: none;
   background: transparent;
+  flex-shrink: 0;
 }
 
 .nav-toggle {
-  display: none;
+  display: inline-flex;
   width: 48px;
   height: 48px;
   flex-shrink: 0;
+  margin-left: auto;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -119,6 +122,9 @@ a {
   box-shadow: var(--shadow-sm);
   cursor: pointer;
   padding: 0;
+  z-index: 130;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .nav-toggle-bar {
@@ -142,7 +148,7 @@ a {
 }
 
 .nav-links {
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 0.4rem;
   list-style: none;
@@ -170,6 +176,16 @@ a {
   background: var(--ink);
   color: var(--amber);
   border-color: var(--ink);
+}
+
+@media (min-width: 901px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-links {
+    display: flex;
+  }
 }
 
 main {
@@ -670,7 +686,7 @@ main {
   visibility: visible;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .wrap {
     padding: 1.75rem 1rem 2.75rem;
   }
@@ -699,14 +715,20 @@ main {
     background-attachment: scroll;
   }
 
+  .site-header {
+    overflow: visible;
+  }
+
   .nav {
     flex-wrap: nowrap;
     padding: 0.75rem 1rem;
+    overflow: visible;
   }
 
   .nav-brand {
     font-size: 0.95rem;
-    min-width: 0;
+    flex: 1;
+    overflow: hidden;
   }
 
   .nav-brand img {
@@ -715,26 +737,28 @@ main {
   }
 
   .nav-toggle {
-    display: inline-flex;
+    display: inline-flex !important;
   }
 
   .nav-links {
-    display: none;
+    display: none !important;
     position: absolute;
     top: calc(100% + 4px);
     left: 1rem;
     right: 1rem;
+    width: auto;
     flex-direction: column;
+    flex-wrap: nowrap;
     gap: 0.5rem;
     padding: 0.75rem;
     background: var(--paper);
     border: var(--border);
     box-shadow: var(--shadow);
-    z-index: 120;
+    z-index: 200;
   }
 
   .nav.is-open .nav-links {
-    display: flex;
+    display: flex !important;
   }
 
   .nav-links a {
